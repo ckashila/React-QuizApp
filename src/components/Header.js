@@ -3,7 +3,7 @@ function Header() {
 	return (
 		<header className="app-header">
 			<img src={ReactLogo} alt="Reactlogo" />
-			<h1>El Camino de los Reyes</h1>
+			<h1>Lore Quiz</h1>
 		</header>
 	);
 }

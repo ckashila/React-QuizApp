@@ -11,16 +11,53 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+import LandingPage from "./LandingPage";
 import "../index.css";
 
 const SECS_PER_QUESTION = 5;
-const NUM_QUESTIONS = 15; // New constant for the number of questions to fetch
+const NUM_QUESTIONS = 15;
 
-// We need to define the intialState in order to use useReduce Hook.
 const initialState = {
+	quizzes: [
+		{
+			id: "ElCaminoDeLosReyes",
+			name: "El Camino de los Reyes",
+			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
+			cover: "camino1.jpg",
+			available: true,
+		},
+		{
+			id: "PalabrasRadiantes",
+			name: "Palabras Radiantes",
+			url: "https://example.com/harryPotter.json",
+			cover: "palabras2.jpg",
+			available: false,
+		},
+		{
+			id: "Juramentada",
+			name: "Juramentada",
+			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
+			cover: "juramentada3.png",
+			available: false,
+		},
+		{
+			id: "ElRitmoDeLaGuerra",
+			name: "Harry Potter",
+			url: "https://example.com/harryPotter.json",
+			cover: "ritmo4.jpg",
+			available: false,
+		},
+		{
+			id: "VientoYVerdad",
+			name: "Viento y Verdad",
+			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
+			cover: "viento5.jpg",
+			available: false,
+		},
+	],
+	selectedQuiz: null,
 	questions: [],
-	// 'loading', 'error', 'ready', 'active', 'finished'
-	status: "loading",
+	status: "landing",
 	index: 0,
 	answer: null,
 	points: 0,
@@ -30,6 +67,12 @@ const initialState = {
 
 function reducer(state, action) {
 	switch (action.type) {
+		case "quizSelected":
+			return {
+				...state,
+				selectedQuiz: action.payload,
+				status: "loading",
+			};
 		case "dataReceived":
 			return {
 				...state,
@@ -49,7 +92,6 @@ function reducer(state, action) {
 			};
 		case "newAnswer":
 			const question = state.questions.at(state.index);
-
 			return {
 				...state,
 				answer: action.payload,
@@ -68,8 +110,7 @@ function reducer(state, action) {
 					state.points > state.highscore ? state.points : state.highscore,
 			};
 		case "restart":
-			return { ...initialState, questions: state.questions, status: "ready" };
-
+			return { ...initialState, quizzes: state.quizzes, status: "landing" };
 		case "tick":
 			return {
 				...state,
@@ -82,15 +123,24 @@ function reducer(state, action) {
 						: state.highscore,
 				status: state.secondsRemaining === 0 ? "finished" : state.status,
 			};
-
 		default:
-			throw new Error("Action unkonwn");
+			throw new Error("Action unknown");
 	}
 }
 
 export default function App() {
 	const [
-		{ questions, status, index, answer, points, highscore, secondsRemaining },
+		{
+			quizzes,
+			selectedQuiz,
+			questions,
+			status,
+			index,
+			answer,
+			points,
+			highscore,
+			secondsRemaining,
+		},
 		dispatch,
 	] = useReducer(reducer, initialState);
 
@@ -100,76 +150,81 @@ export default function App() {
 		0
 	);
 
-	useEffect(function () {
-		fetch("https://ckashila.github.io/QuizQuestions/WayOfKings.json")
-			.then((res) => res.json())
-			.then((data) => {
-				const allQuestions = data["questions"];
-				const randomQuestions = getRandomQuestions(allQuestions, NUM_QUESTIONS);
-				dispatch({
-					type: "dataReceived",
-					payload: randomQuestions,
-				});
-			})
-			.catch((err) => dispatch({ type: "dataFailed" }));
-	}, []);
+	useEffect(() => {
+		if (selectedQuiz) {
+			const selectedQuizData = quizzes.find((quiz) => quiz.id === selectedQuiz);
+			fetch(selectedQuizData.url)
+				.then((res) => res.json())
+				.then((data) => {
+					const allQuestions = data["questions"];
+					const randomQuestions = getRandomQuestions(
+						allQuestions,
+						NUM_QUESTIONS
+					);
+					dispatch({
+						type: "dataReceived",
+						payload: randomQuestions,
+					});
+				})
+				.catch((err) => dispatch({ type: "dataFailed" }));
+		}
+	}, [selectedQuiz, quizzes]);
 
 	return (
 		<div className="wrapper">
 			<div className="app">
-				<div className="headerWrapper">
-					<Header />
-
-					<Main>
-						{status === "loading" && <Loader />}
-						{status === "error" && <Error />}
-						{status === "ready" && (
-							<StartScreen numQuestions={numQuestions} dispatch={dispatch} />
-						)}{" "}
-						{status === "active" && (
-							<>
-								<Progress
-									index={index}
-									numQuestions={numQuestions}
-									points={points}
-									maxPossiblePoints={maxPossiblePoints}
-									answer={answer}
-								/>
-								<Question
-									question={questions[index]}
-									dispatch={dispatch}
-									answer={answer}
-								/>
-								<Footer>
-									<Timer
-										dispatch={dispatch}
-										secondsRemaining={secondsRemaining}
-									/>
-									<NextButton
-										dispatch={dispatch}
-										answer={answer}
-										numQuestions={numQuestions}
-										index={index}
-									/>
-								</Footer>
-							</>
-						)}
-						{status === "finished" && (
-							<FinishScreen
+				<Header />
+				<Main status={status} numQuestions={numQuestions} dispatch={dispatch}>
+					{status === "landing" && (
+						<LandingPage quizzes={quizzes} dispatch={dispatch} />
+					)}
+					{status === "loading" && <Loader />}
+					{status === "error" && <Error />}
+					{status === "ready" && (
+						<StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+					)}
+					{status === "active" && (
+						<>
+							<Progress
+								index={index}
+								numQuestions={numQuestions}
 								points={points}
 								maxPossiblePoints={maxPossiblePoints}
-								highscore={highscore}
-								dispatch={dispatch}
+								answer={answer}
 							/>
-						)}
-					</Main>
-				</div>
+							<Question
+								question={questions[index]}
+								dispatch={dispatch}
+								answer={answer}
+							/>
+							<Footer>
+								<Timer
+									dispatch={dispatch}
+									secondsRemaining={secondsRemaining}
+								/>
+								<NextButton
+									dispatch={dispatch}
+									answer={answer}
+									numQuestions={numQuestions}
+									index={index}
+								/>
+							</Footer>
+						</>
+					)}
+					{status === "finished" && (
+						<FinishScreen
+							points={points}
+							maxPossiblePoints={maxPossiblePoints}
+							highscore={highscore}
+							dispatch={dispatch}
+						/>
+					)}
+				</Main>
 			</div>
 		</div>
 	);
 }
 
-// New function to get random questions
 function getRandomQuestions(questions, num) {
 	const shuffled = [...questions].sort(() => 0.5 - Math.random());
 	return shuffled.slice(0, num);
