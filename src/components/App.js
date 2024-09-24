@@ -23,35 +23,40 @@ const initialState = {
 			id: "ElCaminoDeLosReyes",
 			name: "El Camino de los Reyes",
 			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
-			cover: "camino1.jpg",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/camino1.jpg",
 			available: true,
 		},
 		{
 			id: "PalabrasRadiantes",
 			name: "Palabras Radiantes",
 			url: "https://example.com/harryPotter.json",
-			cover: "palabras2.jpg",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/palabras2.jpg",
 			available: false,
 		},
 		{
 			id: "Juramentada",
 			name: "Juramentada",
 			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
-			cover: "juramentada3.png",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/juramentada3.png",
 			available: false,
 		},
 		{
 			id: "ElRitmoDeLaGuerra",
 			name: "Harry Potter",
 			url: "https://example.com/harryPotter.json",
-			cover: "ritmo4.jpg",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/ritmo4.jpg",
 			available: false,
 		},
 		{
 			id: "VientoYVerdad",
 			name: "Viento y Verdad",
 			url: "https://ckashila.github.io/QuizQuestions/WayOfKings.json",
-			cover: "viento5.jpg",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/viento5.jpg",
 			available: false,
 		},
 	],
