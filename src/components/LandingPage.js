@@ -10,7 +10,7 @@ function LandingPage({ quizzes, dispatch }) {
 					>
 						<div className="quiz-cover-container">
 							<img
-								src={`./screenshots/${quiz.cover}`}
+								src={quiz.cover} // Updated to use the full URL
 								alt={quiz.name}
 								className="quiz-cover"
 								onClick={() => {
