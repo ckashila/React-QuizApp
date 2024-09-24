@@ -14,6 +14,7 @@ import Timer from "./Timer";
 import "../index.css";
 
 const SECS_PER_QUESTION = 5;
+const NUM_QUESTIONS = 15; // New constant for the number of questions to fetch
 
 // We need to define the intialState in order to use useReduce Hook.
 const initialState = {
@@ -102,12 +103,14 @@ export default function App() {
 	useEffect(function () {
 		fetch("https://ckashila.github.io/QuizQuestions/WayOfKings.json")
 			.then((res) => res.json())
-			.then((data) =>
+			.then((data) => {
+				const allQuestions = data["questions"];
+				const randomQuestions = getRandomQuestions(allQuestions, NUM_QUESTIONS);
 				dispatch({
 					type: "dataReceived",
-					payload: data["questions"],
-				})
-			)
+					payload: randomQuestions,
+				});
+			})
 			.catch((err) => dispatch({ type: "dataFailed" }));
 	}, []);
 
@@ -164,4 +167,10 @@ export default function App() {
 			</div>
 		</div>
 	);
+}
+
+// New function to get random questions
+function getRandomQuestions(questions, num) {
+	const shuffled = [...questions].sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, num);
 }
