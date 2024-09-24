@@ -22,7 +22,7 @@ html {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 body {
-  min-height: 100vh;
+  min-height: 20vh;
   color: var(--color-light);
   background-color: var(--color-darkest);
   padding: 2rem;
@@ -43,7 +43,8 @@ body {
 }
 .headerWrapper {
   position: relative;
-  top: -30%;
+  top: 0; /* Adjust this value if needed */
+  z-index: 1; /* Ensure the header is on top */
 }
 .main {
   width: calc(80vmin);
@@ -296,7 +297,7 @@ progress {
   cursor: pointer;
   transition: transform 0.3s ease;
   width: calc(33.33% - 2rem); /* Adjust based on how many covers you want per row */
-  max-width: 300px; /* Maximum width for larger screens */
+  max-width: 200px; /* Maximum width for larger screens */
 }
 
 .quiz-item:hover {
@@ -315,6 +316,11 @@ progress {
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  border: 2px solid transparent;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 1rem; /* Add margin to ensure the first cover is visible */
 }
 
 .unavailable-overlay {
@@ -327,7 +333,8 @@ progress {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  border-radius: 8px; /* Match the border-radius of the cover */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
 .unavailable-text {
@@ -356,7 +363,7 @@ progress {
 
 @media (max-width: 768px) {
   .quiz-item {
-    width: calc(100% - 2rem);
+    width: calc(40% - 2rem);
   }
 }
 
@@ -412,32 +419,13 @@ progress {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 200px); /* Adjust based on your header and other elements */
+  padding-top: 2rem; /* Add padding to ensure the first cover is visible */
 }
 
-.quiz-cover {
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-
-.quiz-cover.selected {
-  border-color: var(--color-accent);
-}
-
-.quiz-cover img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-}
-
-.quiz-cover p {
-  padding: 0.5rem;
-  text-align: center;
-}
-
-.landing-page .btn {
-  margin-top: 1rem;
+/* Add a scrollable container for the header and the quiz covers */
+.scrollable-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 2rem); /* Adjust based on your padding and other elements */
+  padding: 1rem;
 }
