@@ -14,8 +14,8 @@ import Timer from "./Timer";
 import LandingPage from "./LandingPage";
 import "../index.css";
 
-const SECS_PER_QUESTION = 5;
-const NUM_QUESTIONS = 15;
+const SECS_PER_QUESTION = 15;
+const NUM_QUESTIONS = 20;
 
 const initialState = {
 	quizzes: [
@@ -53,7 +53,7 @@ const initialState = {
 		},
 		{
 			id: "ElRitmoDeLaGuerra",
-			name: "Harry Potter",
+			name: "El Ritmo de la Guerra",
 			url: "https://example.com/harryPotter.json",
 			cover:
 				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/ritmo4.jpg",
@@ -135,6 +135,11 @@ function reducer(state, action) {
 							: state.highscore
 						: state.highscore,
 				status: state.secondsRemaining === 0 ? "finished" : state.status,
+			};
+		case "addTime":
+			return {
+				...state,
+				secondsRemaining: state.secondsRemaining + action.payload,
 			};
 		default:
 			throw new Error("Action unknown");

@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Codystar&display=swap");
+
 :root {
   --color-darkest: #343a40;
   --color-dark: #495057;
@@ -7,8 +12,6 @@
   --color-theme: #1098ad;
   --color-accent: #ffa94d;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Codystar&display=swap");
 
 * {
   margin: 0;
@@ -296,7 +299,6 @@ progress {
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  width: calc(33.33% - 2rem); /* Adjust based on how many covers you want per row */
   max-width: 200px; /* Maximum width for larger screens */
 }
 
@@ -338,24 +340,11 @@ progress {
 }
 
 .unavailable-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 1.4rem;
-  pointer-events: none;
-}
-
-/* Responsive adjustments for the "coming soon" text */
-@media (max-width: 768px) {
-  .unavailable-text {
-    font-size: 1rem; /* Smaller font size for mobile */
-    padding: 0.3rem 0.8rem; /* Smaller padding for mobile */
-  }
 }
 
 .quiz-item.unavailable {
@@ -441,4 +430,22 @@ progress {
   overflow-y: auto;
   max-height: calc(100vh - 2rem); /* Adjust based on your padding and other elements */
   padding: 1rem;
+}
+
+.btn-add-time {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-add-time:hover {
+  background-color: #45a049;
 }
