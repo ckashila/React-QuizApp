@@ -41,8 +41,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: calc(100vw - 30vw);
-  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 .headerWrapper {
   position: relative;
@@ -50,7 +52,8 @@ body {
   z-index: 1; /* Ensure the header is on top */
 }
 .main {
-  width: calc(80vmin);
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -299,30 +302,27 @@ progress {
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  max-width: 200px; /* Maximum width for larger screens */
-}
-
-.quiz-item:hover {
-  transform: scale(1.05);
+  width: 100%;
 }
 
 .quiz-cover-container {
   position: relative;
   width: 100%;
+  padding-top: 150%; /* 2:3 aspect ratio */
 }
 
 .quiz-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 3; /* Maintain book cover aspect ratio */
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   border: 2px solid transparent;
-  overflow: hidden;
   transition: all 0.3s;
-  margin-top: 1rem; /* Add margin to ensure the first cover is visible */
 }
 
 .unavailable-overlay {
@@ -335,16 +335,15 @@ progress {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 8px; /* Match the border-radius of the cover */
-  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  border-radius: 8px;
 }
 
 .unavailable-text {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 1.4rem;
+  font-size: 0.875rem;
 }
 
 .quiz-item.unavailable {
@@ -356,16 +355,26 @@ progress {
   transform: none;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .quiz-item {
-    width: calc(50% - 2rem);
+/* Add these new styles for better responsiveness */
+@media (max-width: 640px) {
+  body {
+    padding: 1rem;
   }
-}
 
-@media (max-width: 768px) {
-  .quiz-item {
-    width: calc(40% - 2rem);
+  .app {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .quiz-name {
+    font-size: 0.875rem;
   }
 }
 
