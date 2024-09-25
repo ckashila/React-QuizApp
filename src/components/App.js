@@ -28,6 +28,14 @@ const initialState = {
 			available: true,
 		},
 		{
+			id: "ImperioFinal",
+			name: "El Imperio Final",
+			url: "https://ckashila.github.io/QuizQuestions/ImperioFinal.json",
+			cover:
+				"https://raw.githubusercontent.com/ckashila/React-QuizApp/refs/heads/main/public/screenshots/mistborn1.jpg",
+			available: true,
+		},
+		{
 			id: "PalabrasRadiantes",
 			name: "Palabras Radiantes",
 			url: "https://example.com/harryPotter.json",
